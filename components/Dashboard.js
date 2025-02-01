@@ -1,6 +1,37 @@
 import styles from "../styles/Dashboard.module.css";
 import { useState, useEffect } from "react";
 
+import StackedHistogram from "../components/DoubleColorHistogram";
+import ScatterPlot from "../components/ScatterPlot";
+
+const data1 = [12, 19, 3, 5, 2, 3];
+const data2 = [7, 8, 2, 4, 6, 1];
+const labels = ["Jan", "Feb", "Mar", "Apr", "May", "Jun"];
+
+// Données Nuage de Points
+const data = [
+  { x: 1, y: 6 },
+  { x: 2, y: 7 },
+  { x: 3, y: 8 },
+  { x: 4, y: 6 },
+  { x: 5, y: 5 },
+  { x: 6, y: 6 },
+  { x: 7, y: 7 },
+  { x: 8, y: 8 },
+  { x: 9, y: 6 },
+  { x: 10, y: 5 },
+  { x: 11, y: 7 },
+  { x: 12, y: 6 },
+  { x: 13, y: 6 },
+  { x: 14, y: 7 },
+  { x: 15, y: 8 },
+  { x: 16, y: 5 },
+  { x: 17, y: 6 },
+  { x: 18, y: 2 },
+  { x: 19, y: 5 },
+];
+const highlightedIndex = 4;
+
 const vaultsDict = {
   KlinVaultAaveV3Usdc: "0xdea01fc5289af2c440ca65582e3c44767c0fcf08",
   KlinVaultCompoundV3Usdc: "0xf3a9a790f84b2e0301069be589fc976cf3eb5661",
@@ -325,21 +356,18 @@ export default function Dashboard() {
           </div>
         </div>
 
-        <div className={styles.divGraphic}>
-          <div className={styles.divCarousel}>
-            <p>Carosel</p>
+        <div className={styles.container}>
+          <div className={styles.graphs}>
+            {/* Histogramme Empilé */}
+            <div className={styles.graphBox}>
+              <h2 className={styles.graphTitle}>Histogramme Empilé</h2>
+              <StackedHistogram data1={data1} data2={data2} labels={labels} />
+            </div>
 
-            {stakesResponseArray.map((elem, index, array) => (
-              <div key={index}>
-                <p>{elem.objKey}</p>
-              </div>
-            ))}
-          </div>
-          <div className={styles.divApy}>
-            <div className={styles.divBtnLogin}>
-              <button className={styles.btnLogin} onClick={() => handleBtn()}>
-                Login
-              </button>
+            {/* Nuage de Points */}
+            <div className={styles.graphBox}>
+              <h2 className={styles.graphTitle}>Nuage de Points</h2>
+              <ScatterPlot data={data} highlightedIndex={highlightedIndex} />
             </div>
           </div>
         </div>
