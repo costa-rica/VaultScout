@@ -1,0 +1,21 @@
+.main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 4rem 0;
+  background-color: var(--background-color);
+}
+
+.btnLogin {
+  background-color: var(--highlight-green);
+  border-radius: 12px;
+  font-size: xx-large;
+  padding: 1rem;
+  width: 15rem;
+  color: var(--light-text-color);
+}
+.divResponseArray > p {
+  color: white;
+}

@@ -9,9 +9,17 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "next": "12.1.6",
-    "react": "18.1.0",
-    "react-dom": "18.1.0"
+    "@fortawesome/fontawesome-svg-core": "^6.7.2",
+    "@fortawesome/free-regular-svg-icons": "^6.7.2",
+    "@fortawesome/free-solid-svg-icons": "^6.7.2",
+    "@fortawesome/react-fontawesome": "^0.2.2",
+    "@fortawesome/react-native-fontawesome": "^0.3.2",
+    "@reduxjs/toolkit": "^2.5.1",
+    "next": "^15.1.6",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "react-native-svg": "^15.11.1",
+    "react-redux": "^9.2.0"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^5.16.4",

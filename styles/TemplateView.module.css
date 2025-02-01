@@ -1,0 +1,14 @@
+.headerCustom {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: var(--background-color);
+  z-index: 1000;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  /* padding: 1rem; */
+  height: var(--header-height);
+}
+.mainCustom {
+  margin-top: var(--header-height);
+}

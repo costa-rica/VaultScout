@@ -7,4 +7,26 @@ body {
 
 * {
   box-sizing: border-box;
+  font-family: var(--font-jetbrains-mono), monospace;
+}
+
+:root {
+  --dark-color: #000000;
+  --background-color: #34385a;
+  --med-text-color: #888787;
+  --light-text-color: #ffffff;
+  --highlight-red: #8b0419;
+  --highlight-green: #4ad22b;
+  --highlight-yellow: #fa9f15;
+  --header-height: 10rem;
+}
+
+/* th {
+  color: var(--med-text-color);
+} */
+.tdWrapAll {
+  word-wrap: break-word; /* Ensure long words or URLs wrap */
+  overflow-wrap: break-word; /* Ensure wrapping in modern browsers */
+  word-break: break-all; /* Break words at arbitrary points for extremely long text */
+  hyphens: auto; /* Adds hyphenation when possible */
 }
