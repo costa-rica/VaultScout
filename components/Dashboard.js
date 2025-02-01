@@ -215,7 +215,7 @@ export default function Dashboard() {
       <div className={styles.divLeft}>
         <div className={styles.divLeftTop}>
           <div className={styles.divTableComparison}>
-            Tableau comparatif
+            <h2>Comparative Table</h2>
             <div className={styles.divTableSuper}>
               <table className={styles.table}>
                 <thead>
@@ -325,7 +325,6 @@ export default function Dashboard() {
           </div>
         </div>
 
-        {/* <div className={styles.divLeftBottom}> */}
         <div className={styles.divGraphic}>
           <div className={styles.divCarousel}>
             <p>Carosel</p>
@@ -333,7 +332,6 @@ export default function Dashboard() {
             {stakesResponseArray.map((elem, index, array) => (
               <div key={index}>
                 <p>{elem.objKey}</p>
-                {/* <p>{array[index]}</p> */}
               </div>
             ))}
           </div>
@@ -347,11 +345,12 @@ export default function Dashboard() {
         </div>
       </div>
       <div className={styles.divRight}>
-        {/* <p>Widget</p> */}
         <iframe
           src="https://scoot.widget.testnet.kiln.fi/earn"
           width="600"
+          height="600"
           style={{ border: "none", height: "100vh", overflow: "hidden" }}
+          //   className={styles.iframe}
           title="Example"
         ></iframe>
       </div>
