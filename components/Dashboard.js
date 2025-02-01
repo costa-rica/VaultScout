@@ -224,24 +224,8 @@ export default function Dashboard() {
 
         {/* <div className={styles.divLeftBottom}> */}
         <div className={styles.divGraphic}>
-          <div className={styles.divCarousel}>
-            <p>Carosel</p>
-
-            {stakesResponseArray.map((elem, index, array) => (
-              <div key={index}>
-                <p>{elem.objKey}</p>
-                {/* <p>{array[index]}</p> */}
-              </div>
-            ))}
-          </div>
-          <div className={styles.divApy}>
-            <p>APY Tableua</p>
-
-            <div className={styles.divBtnLogin}>
-              <button className={styles.btnLogin} onClick={() => handleBtn()}>
-                Login
-              </button>
-            </div>
+          <div>
+            <p>Insert Graphic here</p>
           </div>
         </div>
       </div>
