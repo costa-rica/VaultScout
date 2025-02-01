@@ -22,19 +22,28 @@ export default function Dashboard() {
 
   const handleBtn = () => {
     console.log("pressed button");
-    console.log(stakesResponseArray);
+    // console.log(stakesResponseArray);
+    // sumStakesResponseByVault;
+    console.log(summedStakesByVaultResponseArray);
   };
 
   useEffect(() => {
-    // callNetworkStats();
-    // console.log(`Bearer ${process.env.NEXT_PUBLIC_API_KEY_KILN_TEST}`);
     const fetchData = async () => {
       await callNetworkStats();
       await callStakes();
     };
 
     fetchData();
-  }, []);
+  }, []); // No `stakesResponseArray` dependency to avoid infinite loop
+
+  useEffect(() => {
+    if (stakesResponseArray.length > 0) {
+      console.log(
+        "-- stakesResponseArray updated, calling sumStakesResponseByVault --"
+      );
+      sumStakesResponseByVault();
+    }
+  }, [stakesResponseArray]); // Runs only when `stakesResponseArray` updates
 
   const callNetworkStats = async () => {
     const options = {
@@ -100,7 +109,35 @@ export default function Dashboard() {
   };
 
   const sumStakesResponseByVault = () => {
-    stakesResponseArray.map((elem) => {});
+    console.log("-- in sumStakesResponseByVault --");
+    const summedArray = stakesResponseArray.map((vault) => {
+      console.log("- in a vault");
+      console.log(vault);
+      // Initialize sums
+      const summedData = {
+        objKey: vault.objKey,
+        current_balance: 0,
+        total_rewards: 0,
+        current_rewards: 0,
+        total_deposited_amount: 0,
+        total_withdrawn_amount: 0,
+      };
+
+      // Sum all relevant fields
+      vault.array.forEach((stake) => {
+        summedData.current_balance += Number(stake.current_balance) || 0;
+        summedData.total_rewards += Number(stake.total_rewards) || 0;
+        summedData.current_rewards += Number(stake.current_rewards) || 0;
+        summedData.total_deposited_amount +=
+          Number(stake.total_deposited_amount) || 0;
+        summedData.total_withdrawn_amount +=
+          Number(stake.total_withdrawn_amount) || 0;
+      });
+
+      return summedData;
+    });
+
+    setSummedStakesByVaultResponseArray(summedArray);
   };
 
   const sortTable = (key) => {
@@ -224,8 +261,22 @@ export default function Dashboard() {
 
         {/* <div className={styles.divLeftBottom}> */}
         <div className={styles.divGraphic}>
-          <div>
-            <p>Insert Graphic here</p>
+          <div className={styles.divCarousel}>
+            <p>Carosel</p>
+
+            {stakesResponseArray.map((elem, index, array) => (
+              <div key={index}>
+                <p>{elem.objKey}</p>
+                {/* <p>{array[index]}</p> */}
+              </div>
+            ))}
+          </div>
+          <div className={styles.divApy}>
+            <div className={styles.divBtnLogin}>
+              <button className={styles.btnLogin} onClick={() => handleBtn()}>
+                Login
+              </button>
+            </div>
           </div>
         </div>
       </div>
