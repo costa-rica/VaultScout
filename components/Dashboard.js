@@ -19,6 +19,8 @@ export default function Dashboard() {
     setSummedStakesByVaultResponseArray,
   ] = useState([]);
   const [sortConfig, setSortConfig] = useState({ key: null, direction: "asc" });
+  const [calculationsAreCompleted, setCalculationsAreCompleted] =
+    useState(false);
 
   const handleBtn = () => {
     console.log("pressed button");
@@ -110,10 +112,11 @@ export default function Dashboard() {
 
   const sumStakesResponseByVault = () => {
     console.log("-- in sumStakesResponseByVault --");
+
+    // Step 1: Compute summed values
     const summedArray = stakesResponseArray.map((vault) => {
-      console.log("- in a vault");
-      console.log(vault);
-      // Initialize sums
+      console.log("- in a vault", vault);
+
       const summedData = {
         objKey: vault.objKey,
         current_balance: 0,
@@ -123,7 +126,6 @@ export default function Dashboard() {
         total_withdrawn_amount: 0,
       };
 
-      // Sum all relevant fields
       vault.array.forEach((stake) => {
         summedData.current_balance += Number(stake.current_balance) || 0;
         summedData.total_rewards += Number(stake.total_rewards) || 0;
@@ -133,12 +135,62 @@ export default function Dashboard() {
         summedData.total_withdrawn_amount +=
           Number(stake.total_withdrawn_amount) || 0;
       });
-
+      summedData.apy =
+        summedData.total_rewards / summedData.total_deposited_amount;
+      setCalculationsAreCompleted(true);
       return summedData;
     });
 
+    // Step 2: Update networkStatsResponseArray by merging summed values
+    setNetworkStatsResponseArray((prevArray) => {
+      return prevArray.map((networkStat) => {
+        const matchedSummedData = summedArray.find(
+          (sumData) => sumData.objKey === networkStat.objKey
+        );
+
+        return matchedSummedData
+          ? {
+              ...networkStat,
+              ...matchedSummedData, // Merging summed properties into the existing object
+            }
+          : networkStat; // Keep unchanged if no match is found
+      });
+    });
+
+    // Step 3: Update summedStakesByVaultResponseArray state
     setSummedStakesByVaultResponseArray(summedArray);
   };
+  //   const sumStakesResponseByVault = () => {
+  //     console.log("-- in sumStakesResponseByVault --");
+  //     const summedArray = stakesResponseArray.map((vault) => {
+  //       console.log("- in a vault");
+  //       console.log(vault);
+  //       // Initialize sums
+  //       const summedData = {
+  //         objKey: vault.objKey,
+  //         current_balance: 0,
+  //         total_rewards: 0,
+  //         current_rewards: 0,
+  //         total_deposited_amount: 0,
+  //         total_withdrawn_amount: 0,
+  //       };
+
+  //       // Sum all relevant fields
+  //       vault.array.forEach((stake) => {
+  //         summedData.current_balance += Number(stake.current_balance) || 0;
+  //         summedData.total_rewards += Number(stake.total_rewards) || 0;
+  //         summedData.current_rewards += Number(stake.current_rewards) || 0;
+  //         summedData.total_deposited_amount +=
+  //           Number(stake.total_deposited_amount) || 0;
+  //         summedData.total_withdrawn_amount +=
+  //           Number(stake.total_withdrawn_amount) || 0;
+  //       });
+
+  //       return summedData;
+  //     });
+
+  //     setSummedStakesByVaultResponseArray(summedArray);
+  //   };
 
   const sortTable = (key) => {
     let direction = "asc";
@@ -203,27 +255,31 @@ export default function Dashboard() {
                             color: sortConfig.key == "apy" ? "orange" : "",
                           }}
                         >
-                          APY actuel
+                          APY Average
                         </span>
                       </button>
                     </th>
                     <th>
-                      <button onClick={() => sortTable("total_yield")}>
+                      <button onClick={() => sortTable("grr")}>
+                        <span
+                          style={{
+                            color: sortConfig.key == "grr" ? "orange" : "",
+                          }}
+                        >
+                          GRR
+                        </span>
+                      </button>
+                    </th>
+                    <th>
+                      <button
+                        onClick={() => sortTable("total_deposited_amount")}
+                      >
                         <span
                           style={{
                             color:
-                              sortConfig.key == "total_yield" ? "orange" : "",
-                          }}
-                        >
-                          Rendement total
-                        </span>
-                      </button>
-                    </th>
-                    <th>
-                      <button onClick={() => sortTable("tvl")}>
-                        <span
-                          style={{
-                            color: sortConfig.key == "tvl" ? "orange" : "",
+                              sortConfig.key == "total_deposited_amount"
+                                ? "orange"
+                                : "",
                           }}
                         >
                           TVL
@@ -237,22 +293,32 @@ export default function Dashboard() {
                   <tr>
                     <td></td>
                   </tr>
-                  {networkStatsResponseArray.map((elem, index) => (
-                    <tr key={index} className={styles.trCustom}>
-                      <td className={styles.tdVaultName}>
-                        <img
-                          src={elem.asset_icon}
-                          alt={`${elem.asset_symbol} icon`}
-                          width="50"
-                        />
-                        {elem.protocol_display_name}
-                      </td>
-                      <td className={styles.tdNormal}>{elem.share_symbol}</td>
-                      <td className={styles.tdNormal}>{elem.grr} </td>
-                      <td className={styles.tdNormal}>{index} - col 4</td>
-                      <td className={styles.tdNormal}>{index} - col 5</td>
-                    </tr>
-                  ))}
+                  {calculationsAreCompleted &&
+                    networkStatsResponseArray.map((elem, index) => (
+                      <tr key={index} className={styles.trCustom}>
+                        <td className={styles.tdVaultName}>
+                          <img
+                            src={elem.asset_icon}
+                            alt={`${elem.asset_symbol} icon`}
+                            width="50"
+                          />
+                          {elem.protocol_display_name}
+                        </td>
+                        <td className={styles.tdNormal}>{elem.share_symbol}</td>
+                        <td className={styles.tdNormal}>
+                          {Math.round(elem.apy * 10000) / 100}%
+                        </td>
+                        <td className={styles.tdNormal}>
+                          {Math.round(elem.grr * 100) / 100}
+                          {/* {elem.grr} */}
+                        </td>
+                        <td className={styles.tdNormal}>
+                          {elem.total_deposited_amount
+                            .toString()
+                            .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                        </td>
+                      </tr>
+                    ))}
                 </tbody>
               </table>
             </div>
