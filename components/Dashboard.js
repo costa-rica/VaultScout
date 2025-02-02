@@ -30,7 +30,6 @@ const data = [
   { x: 18, y: 2 },
   { x: 19, y: 5 },
 ];
-const highlightedIndex = 4;
 
 const vaultsDict = {
   KlinVaultAaveV3Usdc: "0xdea01fc5289af2c440ca65582e3c44767c0fcf08",
@@ -367,7 +366,7 @@ export default function Dashboard() {
             {/* Nuage de Points */}
             <div className={styles.graphBox}>
               <h2 className={styles.graphTitle}>Nuage de Points</h2>
-              <ScatterPlot data={data} highlightedIndex={highlightedIndex} />
+              <ScatterPlot data={data} />
             </div>
           </div>
         </div>
