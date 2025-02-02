@@ -18,7 +18,7 @@
   height: 50%;
   padding: 0;
   margin: 0;
-  border: dashed 0.1rem black;
+  /* border: dashed 0.1rem black; */
 }
 .table {
   width: 100%;
@@ -65,14 +65,14 @@
   height: 100%;
   display: flex;
   flex-direction: row;
-  border: dashed 0.1rem black;
+  /* border: dashed 0.1rem black; */
 }
 .divCarousel {
   width: 50%;
   height: 100%;
 }
 .divApy {
-  background-color: green;
+  /* background-color: green; */
   width: 50%;
   height: 100%;
 }
@@ -81,7 +81,7 @@
   height: 100vh;
   /* background-color: purple;  */
   width: 40%;
-  border: dashed 0.1rem black;
+  /* border: dashed 0.1rem black; */
   /* / margin: 1rem; / */
 }
 
@@ -94,8 +94,8 @@
   height: 50%;
   padding: 0;
   margin: 0;
-  border: dashed 0.1rem black;
-  background-color: #f3f4f6;
+  /* border: dashed 0.1rem black; */
+  /* background-color: #f3f4f6; */
 }
 
 .graphs {
