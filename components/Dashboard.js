@@ -6,7 +6,8 @@ import ScatterPlot from "../components/ScatterPlot";
 
 const data1 = [12, 19, 3, 5, 2, 3];
 const data2 = [7, 8, 2, 4, 6, 1];
-const labels = ["Jan", "Feb", "Mar", "Apr", "May", "Jun"];
+// const labels = ["Jan", "Feb", "Mar", "Apr", "May", "Jun"];
+const labels = ["skUSDC", "skcUSDC", "BUSDT", "dakUSDC", "dakUSDT"];
 
 // Données Nuage de Points
 const data = [
@@ -51,6 +52,11 @@ export default function Dashboard() {
   const [sortConfig, setSortConfig] = useState({ key: null, direction: "asc" });
   const [calculationsAreCompleted, setCalculationsAreCompleted] =
     useState(false);
+  const [histogramDataTotalDepAmount, setHistogramDataTotalDepAmount] =
+    useState([]);
+  const [histogramDataCurrentBalance, setHistogramDataCurrentBalance] =
+    useState([]);
+  const [histogramDataLabels, setHistogramDataLabels] = useState([]);
 
   const handleBtn = () => {
     console.log("pressed button");
@@ -76,6 +82,35 @@ export default function Dashboard() {
       sumStakesResponseByVault();
     }
   }, [stakesResponseArray]); // Runs only when `stakesResponseArray` updates
+
+  useEffect(() => {
+    setHistogramDataTotalDepAmount(
+      summedStakesByVaultResponseArray.map(
+        (item) => item.total_deposited_amount / 1000000000
+      )
+    );
+    setHistogramDataCurrentBalance(
+      summedStakesByVaultResponseArray.map(
+        (item) => item.current_balance / 1000000000
+      )
+    );
+
+    setHistogramDataLabels(
+      summedStakesByVaultResponseArray.map((item) => {
+        console.log(`what are shared symbol: ${item?.objKey}`);
+        const matchingVault = networkStatsResponseArray.find(
+          (vault) => vault.objKey === item.objKey
+        );
+        if (matchingVault) {
+          console.log(
+            `item.objKey sharedsymbol: ${matchingVault.share_symbol}`
+          );
+          return matchingVault.share_symbol;
+        }
+        return ""; // Fallback in case there's no match
+      })
+    );
+  }, [summedStakesByVaultResponseArray]);
 
   const callNetworkStats = async () => {
     const options = {
@@ -145,7 +180,7 @@ export default function Dashboard() {
 
     // Step 1: Compute summed values
     const summedArray = stakesResponseArray.map((vault) => {
-      console.log("- in a vault", vault);
+      // console.log("- in a vault", vault);
 
       const summedData = {
         objKey: vault.objKey,
@@ -167,6 +202,7 @@ export default function Dashboard() {
       });
       summedData.apy =
         summedData.total_rewards / summedData.total_deposited_amount;
+
       setCalculationsAreCompleted(true);
       return summedData;
     });
@@ -190,37 +226,6 @@ export default function Dashboard() {
     // Step 3: Update summedStakesByVaultResponseArray state
     setSummedStakesByVaultResponseArray(summedArray);
   };
-  //   const sumStakesResponseByVault = () => {
-  //     console.log("-- in sumStakesResponseByVault --");
-  //     const summedArray = stakesResponseArray.map((vault) => {
-  //       console.log("- in a vault");
-  //       console.log(vault);
-  //       // Initialize sums
-  //       const summedData = {
-  //         objKey: vault.objKey,
-  //         current_balance: 0,
-  //         total_rewards: 0,
-  //         current_rewards: 0,
-  //         total_deposited_amount: 0,
-  //         total_withdrawn_amount: 0,
-  //       };
-
-  //       // Sum all relevant fields
-  //       vault.array.forEach((stake) => {
-  //         summedData.current_balance += Number(stake.current_balance) || 0;
-  //         summedData.total_rewards += Number(stake.total_rewards) || 0;
-  //         summedData.current_rewards += Number(stake.current_rewards) || 0;
-  //         summedData.total_deposited_amount +=
-  //           Number(stake.total_deposited_amount) || 0;
-  //         summedData.total_withdrawn_amount +=
-  //           Number(stake.total_withdrawn_amount) || 0;
-  //       });
-
-  //       return summedData;
-  //     });
-
-  //     setSummedStakesByVaultResponseArray(summedArray);
-  //   };
 
   const sortTable = (key) => {
     let direction = "asc";
@@ -360,7 +365,13 @@ export default function Dashboard() {
             {/* Histogramme Empilé */}
             <div className={styles.graphBox}>
               <h2 className={styles.graphTitle}>Histogramme Empilé</h2>
-              <StackedHistogram data1={data1} data2={data2} labels={labels} />
+              {/* <StackedHistogram data1={data1} data2={data2} labels={labels} /> */}
+              <StackedHistogram
+                data1={histogramDataTotalDepAmount}
+                data2={histogramDataCurrentBalance}
+                labels={histogramDataLabels}
+                // seriesNames={["Total Deposited Amount", "Current Balance"]}
+              />
             </div>
 
             {/* Nuage de Points */}
