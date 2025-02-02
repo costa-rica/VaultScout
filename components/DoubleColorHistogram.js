@@ -26,7 +26,8 @@ const StackedHistogram = ({ data1, data2, labels }) => {
     labels: labels, // Les labels sur l'axe X
     datasets: [
       {
-        label: "Série 1", // Légende pour la première série
+        //label: "Série 1", // Légende pour la première série
+        label: "Total Deposit Amt", // Légende pour la première série
         data: data1, // Données de la première série
         backgroundColor: "rgba(75, 192, 192, 0.6)", // Couleur des barres de la première série
         borderColor: "rgba(75, 192, 192, 1)", // Couleur de la bordure pour la première série
@@ -34,7 +35,7 @@ const StackedHistogram = ({ data1, data2, labels }) => {
         stack: "stack1", // Nom de la pile pour cette série
       },
       {
-        label: "Série 2", // Légende pour la deuxième série
+        label: "Current Balance", // Légende pour la deuxième série
         data: data2, // Données de la deuxième série
         backgroundColor: "rgba(255, 99, 132, 0.6)", // Couleur des barres de la deuxième série
         borderColor: "rgba(255, 99, 132, 1)", // Couleur de la bordure pour la deuxième série
@@ -50,7 +51,7 @@ const StackedHistogram = ({ data1, data2, labels }) => {
     plugins: {
       title: {
         display: true,
-        text: "Histogramme Empilé",
+        // text: "Histogramme Empilé",
       },
     },
     scales: {

@@ -84,6 +84,8 @@ export default function Dashboard() {
   }, [stakesResponseArray]); // Runs only when `stakesResponseArray` updates
 
   useEffect(() => {
+    console.log(`-- stakesResponseArray --`);
+    console.log(stakesResponseArray);
     setHistogramDataTotalDepAmount(
       summedStakesByVaultResponseArray.map(
         (item) => item.total_deposited_amount / 1000000000
@@ -360,26 +362,25 @@ export default function Dashboard() {
           </div>
         </div>
 
-        <div className={styles.container}>
-          <div className={styles.graphs}>
-            {/* Histogramme Empilé */}
-            <div className={styles.graphBox}>
-              <h2 className={styles.graphTitle}>Histogramme Empilé</h2>
-              {/* <StackedHistogram data1={data1} data2={data2} labels={labels} /> */}
-              <StackedHistogram
-                data1={histogramDataTotalDepAmount}
-                data2={histogramDataCurrentBalance}
-                labels={histogramDataLabels}
-                // seriesNames={["Total Deposited Amount", "Current Balance"]}
-              />
-            </div>
+        <div className={styles.divGraphics}>
+          {/* <div className={styles.graphs}> */}
+          {/* Histogramme Empilé */}
+          <div className={styles.graphBox}>
+            <h2 className={styles.graphTitle}>Histogramme Empilé</h2>
 
-            {/* Nuage de Points */}
-            <div className={styles.graphBox}>
-              <h2 className={styles.graphTitle}>Nuage de Points</h2>
-              <ScatterPlot data={data} />
-            </div>
+            <StackedHistogram
+              data1={histogramDataTotalDepAmount}
+              data2={histogramDataCurrentBalance}
+              labels={histogramDataLabels}
+            />
           </div>
+
+          {/* Nuage de Points */}
+          <div className={styles.graphBox}>
+            <h2 className={styles.graphTitle}>Nuage de Points</h2>
+            <ScatterPlot data={data} />
+          </div>
+          {/* </div> */}
         </div>
       </div>
       <div className={styles.divRight}>

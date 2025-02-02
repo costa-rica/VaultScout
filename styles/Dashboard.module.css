@@ -8,6 +8,7 @@
   width: 60%;
   padding: 0;
   margin: 0;
+  flex: 1;
 }
 
 .divTableSuper {
@@ -83,27 +84,34 @@
   width: 40%;
   /* border: dashed 0.1rem black; */
   /* / margin: 1rem; / */
+  flex: 0; /* Do not allow it to grow */
 }
 
 /* ---- NEW for charts ----*/
-.container {
-  display: flex;
+.divGraphics {
+  /* display: flex;
   align-items: center;
   justify-content: center;
   width: 100%;
   height: 50%;
   padding: 0;
   margin: 0;
+  flex: 1; */
   /* border: dashed 0.1rem black; */
   /* background-color: #f3f4f6; */
+  display: flex;
+  justify-content: space-between;
+  align-items: stretch; /* Ensures all child elements stretch to the same height */
+  width: 100%;
+  height: 50vh; /* Adjust based on your needs */
 }
 
-.graphs {
+/* .graphs {
   display: flex;
   gap: 24px;
   width: 80%;
   max-width: 1200px;
-}
+} */
 
 .graphBox {
   flex: 1;
