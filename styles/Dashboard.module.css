@@ -89,29 +89,12 @@
 
 /* ---- NEW for charts ----*/
 .divGraphics {
-  /* display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 50%;
-  padding: 0;
-  margin: 0;
-  flex: 1; */
-  /* border: dashed 0.1rem black; */
-  /* background-color: #f3f4f6; */
   display: flex;
   justify-content: space-between;
   align-items: stretch; /* Ensures all child elements stretch to the same height */
   width: 100%;
-  height: 50vh; /* Adjust based on your needs */
+  /*height: 50vh; /* Adjust based on your needs */
 }
-
-/* .graphs {
-  display: flex;
-  gap: 24px;
-  width: 80%;
-  max-width: 1200px;
-} */
 
 .graphBox {
   flex: 1;
@@ -136,4 +119,43 @@
   width: 100% !important;
   height: 100% !important;
   max-height: 500px; /* Vous pouvez ajuster la hauteur maximale selon votre besoin */
+}
+
+@media screen and (max-width: 768px) {
+  /* Adjust breakpoint as needed */
+  .main {
+    flex-direction: column; /* Stack divs vertically */
+  }
+
+  .divLeft {
+    width: 100%; /* Take full width */
+    height: auto; /* Adjust height dynamically */
+  }
+
+  .divRight {
+    width: 100%; /* Take full width */
+    height: auto; /* Adjust height dynamically */
+    display: flex;
+    justify-content: center; /* Center iframe */
+    align-items: center;
+  }
+
+  .divRight iframe {
+    width: 100%; /* Make iframe responsive */
+    height: auto; /* Adjust height dynamically */
+    min-height: 300px; /* Ensure iframe remains visible */
+  }
+  /* Stack the charts inside divGraphics */
+  .divGraphics {
+    flex-direction: column;
+    display: flex;
+    gap: 1rem; /* Adds space between stacked charts */
+    width: 100%;
+  }
+
+  .graphBox {
+    width: 100%;
+    height: auto; /* Allow charts to expand naturally */
+    min-height: 500px; /* Ensures both charts remain visible */
+  }
 }
