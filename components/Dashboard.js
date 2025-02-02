@@ -252,7 +252,7 @@ export default function Dashboard() {
       <div className={styles.divLeft}>
         <div className={styles.divLeftTop}>
           <div className={styles.divTableComparison}>
-            <h2>Comparative Table</h2>
+            <h1>Vault Scout</h1>
             <div className={styles.divTableSuper}>
               <table className={styles.table}>
                 <thead>

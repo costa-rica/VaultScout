@@ -21,6 +21,9 @@
   margin: 0;
   /* border: dashed 0.1rem black; */
 }
+.divTableComparison > h1 {
+  text-align: center;
+}
 .table {
   width: 100%;
   border-collapse: collapse;
