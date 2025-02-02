@@ -12,7 +12,7 @@ function App({ Component, pageProps }) {
   return (
     <div className={`${jetBrainsMono.variable} `}>
       <Head>
-        <title>Next.js App</title>
+        <title>Vault Scout</title>
       </Head>
       <Component {...pageProps} />
     </div>
